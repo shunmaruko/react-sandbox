@@ -1,8 +1,8 @@
 // import from external
 import { useState } from "react";
 
-// import from sibling
-import reactLogo from "./assets/react.svg";
+// import from parent
+import reactLogo from "@/assets/react.svg";
 
 // import from index
 import viteLogo from "/vite.svg";
