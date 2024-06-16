@@ -87,6 +87,13 @@ module.exports = {
             format: ["camelCase", "PascalCase"],
           },
         ],
+      },
+    },
+    {
+      // except index.tsx
+      plugins: ["check-file"],
+      files: ["**/*.tsx", "!**/index.tsx"],
+      rules: {
         "check-file/filename-naming-convention": [
           "error",
           {
@@ -97,6 +104,13 @@ module.exports = {
             ignoreMiddleExtensions: true,
           },
         ],
+      },
+    },
+    {
+      // for index.tsx
+      files: ["**/index.tsx"],
+      rules: {
+        "unicorn/filename-case": ["error", { case: "camelCase" }],
       },
     },
     {
