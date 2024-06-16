@@ -64,6 +64,7 @@ module.exports = {
           {
             selector: "variable",
             format: ["strictCamelCase", "UPPER_CASE"],
+            types: ["array", "number", "string"],
           },
           {
             selector: "variable",
