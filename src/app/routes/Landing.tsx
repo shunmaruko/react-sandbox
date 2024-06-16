@@ -1,17 +1,16 @@
-// import from external
 import { useState } from "react";
 
-// import from sibling
-import reactLogo from "./assets/react.svg";
+import { Head } from "@/components/Head";
+import reactLogo from "@/assets/react.svg";
 
-// import from index
 import viteLogo from "/vite.svg";
-import "./App.css";
+import "../App.css";
 
-const App = () => {
+export const Landing = () => {
   const [count, setCount] = useState(0);
   return (
     <>
+      <Head description="Root page" />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -35,5 +34,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

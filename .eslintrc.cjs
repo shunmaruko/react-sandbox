@@ -7,7 +7,7 @@ module.exports = {
   parserOptions: {
     project: "./tsconfig.json",
   },
-  plugins: ["react", "react-refresh", "import"],
+  plugins: ["react", "react-refresh", "import", "check-file"],
   rules: {
     //TODO: enforce react component to PascallCase
     "react-refresh/only-export-components": [
@@ -50,7 +50,6 @@ module.exports = {
       settings: {
         react: { version: "detect" },
       },
-      plugins: ["check-file"],
       rules: {
         "@typescript-eslint/no-unused-vars": ["error"],
         "@typescript-eslint/naming-convention": [
@@ -64,6 +63,7 @@ module.exports = {
           {
             selector: "variable",
             format: ["strictCamelCase", "UPPER_CASE"],
+            types: ["array", "number", "string"],
           },
           {
             selector: "variable",
@@ -86,6 +86,12 @@ module.exports = {
             format: ["camelCase", "PascalCase"],
           },
         ],
+      },
+    },
+    {
+      // except index.tsx
+      files: ["**/*.tsx", "!**/index.tsx"],
+      rules: {
         "check-file/filename-naming-convention": [
           "error",
           {
@@ -99,7 +105,18 @@ module.exports = {
       },
     },
     {
-      plugins: ["check-file"],
+      // for index.tsx
+      files: ["**/index.tsx"],
+      rules: {
+        "check-file/filename-naming-convention": [
+          "error",
+          {
+            "**/*": "CAMEL_CASE",
+          },
+        ],
+      },
+    },
+    {
       files: ["src/**/!(__tests__)/*"], // exclude __tests__
       rules: {
         "check-file/folder-naming-convention": [
