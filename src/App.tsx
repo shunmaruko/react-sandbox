@@ -1,15 +1,15 @@
-import { useState } from 'react'
+// import from external
+import { useState } from "react";
 
-import viteLogo from '/vite.svg'
+// import from sibling
+import reactLogo from "./assets/react.svg";
 
-import reactLogo from './assets/react.svg'
-
-import './App.css'
-
-
+// import from index
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 const App = () => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   return (
     <>
       <div>
@@ -33,7 +33,7 @@ const App = () => {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 };
 
-export default App
+export default App;
