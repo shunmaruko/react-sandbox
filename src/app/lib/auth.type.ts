@@ -12,16 +12,16 @@ export type AuthResponse = {
   user: User;
 };
 
-const loginInputSchema = z.object({
-  email: z.string().min(1, "Required").email("Invalid email"),
+export const loginInputSchema = z.object({
+  email: z.string().min(1, "Required").email({ message: "Invalid email" }),
   password: z.string().min(5, "Required"),
 });
 
-const registerInputSchema = z.object({
-  email: z.string().min(1, "Required"),
+export const registerInputSchema = z.object({
+  email: z.string().min(1, "Required").email({ message: "Invalid email" }),
   firstName: z.string().min(1, "Required"),
   lastName: z.string().min(1, "Required"),
-  password: z.string().min(1, "Required"),
+  password: z.string().min(5, "Must be longer than 5 length"),
 });
 
 export type LoginInput = z.infer<typeof loginInputSchema>;

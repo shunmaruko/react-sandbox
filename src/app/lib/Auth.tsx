@@ -1,4 +1,5 @@
 import { configureAuth } from "react-query-auth";
+import { Navigate, useLocation } from "react-router-dom";
 
 import { Api } from "./api-client";
 import { RegisterInput, AuthResponse, User, LoginInput } from "./auth.type";
@@ -26,3 +27,19 @@ const authConfig = {
 
 export const { useUser, useLogin, useRegister, useLogout, AuthLoader } =
   configureAuth(authConfig);
+
+export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const user = useUser();
+  const location = useLocation();
+
+  if (!user.data) {
+    return (
+      <Navigate
+        to={`/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
+  }
+
+  return children;
+};

@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 //https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#wrappingmirroring-a-html-element
-export type InputProps = React.ComponentPropsWithoutRef<"input"> & {
+export type InputProps = React.ComponentPropsWithRef<"input"> & {
   label: string;
 };
 
