@@ -90,7 +90,7 @@ module.exports = {
     },
     {
       // except index.tsx
-      files: ["**/*.tsx", "!**/index.tsx"],
+      files: ["**/*.tsx", "**/*.ts", "!**/index.tsx"],
       rules: {
         "check-file/filename-naming-convention": [
           "error",

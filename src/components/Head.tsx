@@ -11,7 +11,7 @@ type HeadProps = {
 
 export const Head = ({ title = "", description = "" }: HeadProps) => {
   return (
-    <Helmet helmetData={helmetData} title={`My Project ${title}`}>
+    <Helmet helmetData={helmetData} title={`My Project : ${title}`}>
       <meta name="description" content={description} />
       <meta name="author" content="shunmaruko" />
       <link rel="icon" type="image/svg+xml" href={viteLogo} sizes="16x16" />
