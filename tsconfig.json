@@ -9,6 +9,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    /*https://zenn.dev/drop_table_user/articles/710c34c9f7c4b0*/
+    "resolvePackageJsonExports": false,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
