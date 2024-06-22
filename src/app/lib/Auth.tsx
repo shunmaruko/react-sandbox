@@ -1,5 +1,5 @@
 import { configureAuth } from "react-query-auth";
-import { Navigate, useLocation } from "react-router-dom";
+import { redirect, useLocation } from "react-router-dom";
 
 import { Api } from "./api-client";
 import { RegisterInput, AuthResponse, User, LoginInput } from "./auth.type";
@@ -33,11 +33,8 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   if (!user.data) {
-    return (
-      <Navigate
-        to={`/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`}
-        replace
-      />
+    return redirect(
+      `/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`,
     );
   }
 

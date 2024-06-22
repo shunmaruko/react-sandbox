@@ -1,4 +1,5 @@
 import { SubmitHandler } from "react-hook-form";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { Layout } from "@/components/layouts/AuthLayout";
 import { Form, FormChildrenProps } from "@/components/ui/form";
@@ -10,7 +11,7 @@ const LoginFormChildren = ({
 }: FormChildrenProps<LoginInput>) => {
   return (
     <>
-      <label htmlFor={"Email"}>Email</label>
+      <label htmlFor={"Email"}>Email: </label>
       <input
         {...register("email")}
         type="text"
@@ -18,7 +19,7 @@ const LoginFormChildren = ({
         placeholder="react@example.com"
       />
       <p>{formState.errors.email?.message}</p>
-      <label htmlFor={"Password"}>Password</label>
+      <label htmlFor={"Password"}>Password: </label>
       <input
         {...register("password")}
         type="text"
@@ -26,7 +27,7 @@ const LoginFormChildren = ({
         placeholder="P@ssw0rd"
       />
       <p>{formState.errors.password?.message}</p>
-      <button type="submit">Login</button>
+      <button type="submit">Login: </button>
     </>
   );
 };
@@ -35,11 +36,18 @@ const onSubmit: SubmitHandler<LoginInput> = (data) =>
   alert(`submitted ${data.email} ${data.password}`);
 
 export const LoginRoute = () => {
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
   return (
     <Layout title="Login">
       <Form schema={loginInputSchema} onSubmit={onSubmit}>
         {LoginFormChildren}
       </Form>
+      <Link
+        to={`/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`}
+      >
+        Forget password?
+      </Link>
     </Layout>
   );
 };

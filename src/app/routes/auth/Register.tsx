@@ -1,16 +1,18 @@
 import { SubmitHandler } from "react-hook-form";
+import { Link, useSearchParams, redirect } from "react-router-dom";
 
 import { Layout } from "@/components/layouts/AuthLayout";
 import { Form, FormChildrenProps } from "@/components/ui/form";
 import { registerInputSchema, RegisterInput } from "@/app/lib/auth.type";
+import { useRegister } from "@/app/lib/Auth";
 
-const LoginFormChildren = ({
+const RegisterFormChildren = ({
   register,
   formState,
 }: FormChildrenProps<RegisterInput>) => {
   return (
     <>
-      <label htmlFor={"First Name"}>First Name</label>
+      <label htmlFor={"First Name"}>First Name: </label>
       <input
         {...register("firstName")}
         type="text"
@@ -18,7 +20,7 @@ const LoginFormChildren = ({
         placeholder="First Name"
       />
       <p>{formState.errors.firstName?.message}</p>
-      <label htmlFor={"Last Name"}>Last Name</label>
+      <label htmlFor={"Last Name"}>Last Name: </label>
       <input
         {...register("lastName")}
         type="text"
@@ -26,7 +28,7 @@ const LoginFormChildren = ({
         placeholder="First Name"
       />
       <p>{formState.errors.lastName?.message}</p>
-      <label htmlFor={"Email"}>Email</label>
+      <label htmlFor={"Email"}>Email: </label>
       <input
         {...register("email")}
         type="text"
@@ -34,7 +36,7 @@ const LoginFormChildren = ({
         placeholder="react@example.com"
       />
       <p>{formState.errors.email?.message}</p>
-      <label htmlFor={"Password"}>Password</label>
+      <label htmlFor={"Password"}>Password: </label>
       <input
         {...register("password")}
         type="text"
@@ -47,17 +49,34 @@ const LoginFormChildren = ({
   );
 };
 
-const onSubmit: SubmitHandler<RegisterInput> = (data) =>
-  alert(
-    `submitted ${data.email} ${data.firstName} ${data.lastName} ${data.password}`,
-  );
+// const onSubmit: SubmitHandler<RegisterInput> = (data) =>
+//   alert(
+//     `submitted ${data.email} ${data.firstName} ${data.lastName} ${data.password}`,
+//   );
 
 export const RegisterRoute = () => {
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
+  const registering = useRegister({
+    onSuccess: () => {
+      return redirect(`${redirectTo ? `${redirectTo}` : "/"}`);
+    },
+  });
   return (
     <Layout title="Register">
-      <Form schema={registerInputSchema} onSubmit={onSubmit}>
-        {LoginFormChildren}
+      <Form
+        schema={registerInputSchema}
+        onSubmit={(values) => {
+          registering.mutate(values);
+        }}
+      >
+        {RegisterFormChildren}
       </Form>
+      <Link
+        to={`/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`}
+      >
+        Log In
+      </Link>
     </Layout>
   );
 };
