@@ -15,6 +15,7 @@ const RegisterUser = (data: RegisterInput): Promise<AuthResponse> => {
 const authConfig = {
   userFn: async (): Promise<User> => {
     const response = await Api.get("/auth/me");
+    //TODO: check the reason why direct call does't work
     return response.data.user;
   },
   loginFn: async (data: LoginInput): Promise<User> => {
