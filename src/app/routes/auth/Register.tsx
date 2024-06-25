@@ -1,4 +1,3 @@
-import { SubmitHandler } from "react-hook-form";
 import { Link, useSearchParams, redirect } from "react-router-dom";
 
 import { Layout } from "@/components/layouts/AuthLayout";

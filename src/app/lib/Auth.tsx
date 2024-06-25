@@ -13,7 +13,10 @@ const RegisterUser = (data: RegisterInput): Promise<AuthResponse> => {
 };
 
 const authConfig = {
-  userFn: (): Promise<User> => Api.get("/auth/me"),
+  userFn: async (): Promise<User> => {
+    const response = await Api.get("/auth/me");
+    return response.data.user;
+  },
   loginFn: async (data: LoginInput): Promise<User> => {
     const response = await LoginUser(data);
     return response.user;

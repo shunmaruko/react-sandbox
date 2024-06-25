@@ -23,6 +23,20 @@ const CreateRouter = () =>
         return { Component: LoginRoute };
       },
     },
+    {
+      path: "/sample",
+      lazy: async () => {
+        const { Sample } = await import("./Sample");
+        return { Component: Sample };
+      },
+    },
+    {
+      path: "/app",
+      lazy: async () => {
+        const { AppRoot } = await import("./app/Route");
+        return { Component: AppRoot };
+      },
+    },
   ]);
 
 export default CreateRouter;
