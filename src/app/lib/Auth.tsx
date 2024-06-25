@@ -1,5 +1,5 @@
 import { configureAuth } from "react-query-auth";
-import { Navigate, useLocation } from "react-router-dom";
+import { redirect, useLocation } from "react-router-dom";
 
 import { Api } from "./api-client";
 import { RegisterInput, AuthResponse, User, LoginInput } from "./auth.type";
@@ -13,7 +13,11 @@ const RegisterUser = (data: RegisterInput): Promise<AuthResponse> => {
 };
 
 const authConfig = {
-  userFn: (): Promise<User> => Api.get("/auth/me"),
+  userFn: async (): Promise<User> => {
+    const response = await Api.get("/auth/me");
+    //TODO: check the reason why direct call does't work
+    return response.data.user;
+  },
   loginFn: async (data: LoginInput): Promise<User> => {
     const response = await LoginUser(data);
     return response.user;
@@ -33,11 +37,8 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   if (!user.data) {
-    return (
-      <Navigate
-        to={`/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`}
-        replace
-      />
+    return redirect(
+      `/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`,
     );
   }
 
