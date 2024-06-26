@@ -40,7 +40,6 @@ export const AuthHandlers = [
   http.post<RegisterParams, RegisterBody, RegisterResponseBody>(
     `${API_BASE_URL}auth/register`,
     async ({ request }) => {
-      console.log("POST /auth/register");
       await delay(1000);
       try {
         const newUser = await request.json();
@@ -70,7 +69,7 @@ export const AuthHandlers = [
           password: newUser.password,
         });
         return HttpResponse.json(
-          { type: "Created", user: newUser },
+          { type: "Created", user: result.user },
           {
             headers: {
               // with a real API servier, the token cookie should also be Secure and HttpOnly
@@ -101,13 +100,12 @@ export const AuthHandlers = [
           password: loginUser.password,
         });
         return HttpResponse.json(
-          { type: "Created", user: loginUser },
+          { type: "Created", user: result.user },
           {
             headers: {
               // with a real API servier, the token cookie should also be Secure and HttpOnly
               "Set-Cookie": `${AUTH_COOKIE}=${result.jwt}; Path=/;`,
             },
-            status: 201,
           },
         );
       } catch (error: any) {
@@ -135,7 +133,7 @@ export const AuthHandlers = [
     },
   ),
   http.get(`${API_BASE_URL}auth/me`, async ({ cookies }) => {
-    await delay(10);
+    await delay(1000);
     try {
       const user = requireAuth(cookies, false);
       return HttpResponse.json({ user: user });

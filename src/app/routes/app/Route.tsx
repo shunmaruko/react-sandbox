@@ -1,4 +1,5 @@
 import { useUser, useLogout } from "@/app/lib/Auth";
+import { Outlet } from "react-router-dom";
 
 export const AppRoot = () => {
   const user = useUser();
@@ -23,6 +24,7 @@ export const AppRoot = () => {
       >
         Log out
       </button>
+      <Outlet />
     </>
   );
 };

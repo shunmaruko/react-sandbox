@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-
+import { ProtectedRoute } from "@/app/lib/Auth";
+import { AppRoot } from "@/app/routes/app/Route";
 const CreateRouter = () =>
   createBrowserRouter([
     {
@@ -32,10 +33,26 @@ const CreateRouter = () =>
     },
     {
       path: "/app",
-      lazy: async () => {
-        const { AppRoot } = await import("./app/Route");
-        return { Component: AppRoot };
-      },
+      element: (
+        <ProtectedRoute>
+          <AppRoot />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          path: "",
+          lazy: async () => {
+            return { Component: () => <>Root page</> };
+          },
+        },
+        {
+          path: "sample",
+          lazy: async () => {
+            const { ProtectedSample } = await import("./app/Sample");
+            return { Component: ProtectedSample };
+          },
+        },
+      ],
     },
   ]);
 
