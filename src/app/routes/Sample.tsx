@@ -5,13 +5,11 @@ import { SampleResponseBody } from "@/features/sample/api";
 import { API_BASE_URL } from "@/config";
 
 const Users = () => {
-  const { error, data } = useQuery({
+  const { error } = useQuery({
     queryKey: ["users"],
     queryFn: () => axios.get(`${API_BASE_URL}all_user`).then((res) => res.data),
   });
   if (error) return "An error has occurred: " + error.message;
-  console.log("users");
-  console.log(data);
   return "Users";
 };
 
