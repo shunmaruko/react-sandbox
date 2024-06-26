@@ -1,9 +1,9 @@
-import { Link, useSearchParams, redirect } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 
 import { Layout } from "@/components/layouts/AuthLayout";
 import { Form, FormChildrenProps } from "@/components/ui/form";
 import { loginInputSchema, LoginInput } from "@/app/lib/auth.type";
-import { useLogin } from "@/app/lib/Auth";
+import { useLogin, useUser } from "@/app/lib/Auth";
 
 const LoginFormChildren = ({
   register,
@@ -38,10 +38,12 @@ const LoginFormChildren = ({
 export const LoginRoute = () => {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo");
+  const navigate = useNavigate();
   const registering = useLogin({
     onSuccess: () => {
-      alert(`succeed to login, redirect to ${redirectTo}`);
-      return redirect(`${redirectTo ? `${redirectTo}` : "/"}`);
+      return navigate(`${redirectTo ? `${redirectTo}` : "/app"}`, {
+        replace: true,
+      });
     },
   });
   return (

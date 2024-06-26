@@ -1,4 +1,4 @@
-import { Link, useSearchParams, redirect } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 
 import { Layout } from "@/components/layouts/AuthLayout";
 import { Form, FormChildrenProps } from "@/components/ui/form";
@@ -48,17 +48,15 @@ const RegisterFormChildren = ({
   );
 };
 
-// const onSubmit: SubmitHandler<RegisterInput> = (data) =>
-//   alert(
-//     `submitted ${data.email} ${data.firstName} ${data.lastName} ${data.password}`,
-//   );
-
 export const RegisterRoute = () => {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo");
+  const navigate = useNavigate();
   const registering = useRegister({
     onSuccess: () => {
-      return redirect(`${redirectTo ? `${redirectTo}` : "/"}`);
+      return navigate(`${redirectTo ? `${redirectTo}` : "/app"}`, {
+        replace: true,
+      });
     },
   });
   return (
