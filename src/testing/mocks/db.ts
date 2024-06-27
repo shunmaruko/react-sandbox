@@ -27,7 +27,6 @@ export const saveDb = (model: Model) => {
 };
 
 export const resetDb = () => {
-  console.log("reset db called");
   window.localStorage.removeItem("msw-db");
 };
 
