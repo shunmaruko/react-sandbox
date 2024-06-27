@@ -8,8 +8,6 @@ import "../App.css";
 
 export const LandingRoute = () => {
   const [count, setCount] = useState(0);
-  //const res = await axios.get(`${API_BASE_URL}sample`);
-  //console.log(res);
   return (
     <Layout>
       <div>
