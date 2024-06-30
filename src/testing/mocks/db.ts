@@ -1,6 +1,7 @@
 import { factory, primaryKey } from "@mswjs/data";
 import { nanoid } from "nanoid";
 
+import { hash } from "@/testing/mocks/utils";
 const models = {
   user: {
     id: primaryKey(nanoid),
@@ -40,4 +41,20 @@ export const initializeDb = () => {
       });
     }
   });
+  // add sample users
+  db.user.create({
+    firstName: "Admin",
+    lastName: "Taro",
+    email: "admin@gmail.com",
+    role: "ADMIN",
+    password: hash("admin"),
+  });
+  db.user.create({
+    firstName: "General",
+    lastName: "Hanako",
+    email: "general@gmail.com",
+    role: "GENERAL",
+    password: hash("general"),
+  });
+  saveDb("user");
 };

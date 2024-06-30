@@ -1,10 +1,12 @@
 import { z } from "zod";
 
+export type Role = "ADMIN" | "USER";
+
 export type User = {
   firstName: string;
   lastName: string;
   email: string;
-  role: "ADMIN" | "USER";
+  role: Role;
 };
 
 export type AuthResponse = {

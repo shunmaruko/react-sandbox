@@ -32,9 +32,6 @@ const LoginFormChildren = ({
   );
 };
 
-//const onSubmit: SubmitHandler<LoginInput> = (data) =>
-//  alert(`submitted ${data.email} ${data.password}`);
-
 export const LoginRoute = () => {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo");

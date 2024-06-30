@@ -5,7 +5,6 @@ import { HelmetProvider } from "react-helmet-async";
 
 import { MainErrorFallback } from "@/components/error";
 import { AuthLoader } from "@/lib/auth";
-import { UnauthorizedFallback } from "@/lib/authorization";
 import { queryClient } from "@/lib/react-query";
 
 type AppProviderProps = {
@@ -24,9 +23,7 @@ const AppPrivider = ({ children }: AppProviderProps) => {
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <AuthLoader renderLoading={() => <>Loading ...</>}>
-              <ErrorBoundary FallbackComponent={UnauthorizedFallback}>
-                {children}
-              </ErrorBoundary>
+              {children}
             </AuthLoader>
           </QueryClientProvider>
         </HelmetProvider>

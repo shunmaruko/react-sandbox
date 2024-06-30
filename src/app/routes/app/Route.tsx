@@ -17,6 +17,7 @@ export const AppRoot = () => {
   return (
     <>
       <>{`Hello ${user.data.firstName}!`}</>
+      <br />
       <button
         onClick={() => {
           alert("Log out");
@@ -25,6 +26,7 @@ export const AppRoot = () => {
       >
         Log out
       </button>
+      <br />
       <Outlet />
     </>
   );
