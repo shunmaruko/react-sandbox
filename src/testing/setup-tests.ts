@@ -5,6 +5,7 @@ import { server } from "@/testing/mocks/server";
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: "error" });
+  resetDb();
 });
 beforeEach(() => {
   initializeDb();

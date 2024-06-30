@@ -1,10 +1,12 @@
-import { render } from "@testing-library/react";
+import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import Cookies from "js-cookie";
-
 import { db } from "@/testing/mocks/db";
 import { Role } from "@/lib/auth.type";
 import { AUTH_COOKIE, authenticate, unhash } from "./mocks/utils";
-import App from "@/app";
+export const waitForLoadingToFinish = () =>
+  waitForElementToBeRemoved(screen.queryAllByText("/Vite + React/i"), {
+    timeout: 4000,
+  });
 
 const loginAsUser = async ({
   email,
@@ -17,7 +19,8 @@ const loginAsUser = async ({
   Cookies.set(AUTH_COOKIE, authUser.jwt);
   return authUser.user;
 };
-const getUser = async (role?: Role) => {
+
+export const getUser = async (role?: Role) => {
   const sampleUser = db.user.findFirst({
     where: {
       role: {
@@ -32,14 +35,4 @@ const getUser = async (role?: Role) => {
     });
     return res;
   }
-};
-export const renderApp = async (children: React.ReactNode, role?: Role) => {
-  const user = await getUser(role);
-  const res = {
-    ...render(children, {
-      wrapper: App,
-    }),
-    user: user,
-  };
-  return res;
 };

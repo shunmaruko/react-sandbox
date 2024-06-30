@@ -9,7 +9,7 @@ import CreateRouter from "@/app/routes";
 // import from index
 import "./App.css";
 
-const AppRouter = () => {
+export const AppRouter = () => {
   const router = useMemo(() => CreateRouter(), []);
   return <RouterProvider router={router} />;
 };

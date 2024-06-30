@@ -54,7 +54,7 @@ export const initializeDb = () => {
     lastName: "Hanako",
     email: "user@gmail.com",
     role: "USER",
-    password: hash("user"),
+    password: hash("user-hanako"),
   });
   saveDb("user");
 };
