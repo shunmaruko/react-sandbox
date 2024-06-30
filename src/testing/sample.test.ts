@@ -23,14 +23,14 @@ describe("Scoped / Nested block", () => {
   test("", () => console.log("2 - test"));
 });
 
-jest.mock("./sample", () => {
-  const originalModule = jest.requireActual("./sample");
+vi.mock("./sample", async () => {
+  const originalModule = await vi.importActual("./sample");
 
   //Mock the default export and named export 'foo'
   return {
     __esModule: true,
     ...originalModule,
-    default: jest
+    default: vi
       .fn()
       .mockImplementationOnce(() => "mocked hoge 1")
       .mockImplementationOnce(() => "mocked hoge 2"),
