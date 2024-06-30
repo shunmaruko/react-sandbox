@@ -1,6 +1,7 @@
 import { factory, primaryKey } from "@mswjs/data";
 import { nanoid } from "nanoid";
 
+import { hash } from "@/testing/mocks/utils";
 const models = {
   user: {
     id: primaryKey(nanoid),
@@ -27,6 +28,7 @@ export const saveDb = (model: Model) => {
 };
 
 export const resetDb = () => {
+  console.log("rest db called");
   window.localStorage.removeItem("msw-db");
 };
 
@@ -40,4 +42,22 @@ export const initializeDb = () => {
       });
     }
   });
+  // add sample users
+  const user = db.user.findFirst({
+    where: {
+      email: {
+        equals: "admin@gmail.com",
+      },
+    },
+  });
+  if (!user) {
+    db.user.create({
+      firstName: "Admin",
+      lastName: "Taro",
+      email: "admin@gmail.com",
+      role: "ADMIN",
+      password: hash("admin"),
+    });
+    saveDb("user");
+  }
 };

@@ -2,6 +2,8 @@ import { db } from "@/testing/mocks/db";
 
 export const hash = (str: string) => "hash-" + str;
 
+export const unhash = (str: string) => str.replace("hash-", "");
+
 export const encode = (obj: any) => window.btoa(JSON.stringify(obj));
 
 export const decode = (str: string) => JSON.parse(window.atob(str));

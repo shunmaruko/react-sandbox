@@ -3,9 +3,9 @@ import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 
+import { MainErrorFallback } from "@/components/error";
 import { AuthLoader } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
-import { MainErrorFallback } from "@/components/error";
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ const Loading = () => {
   return <h2>🌀 Loading...</h2>;
 };
 
-const AppPrivider = ({ children }: AppProviderProps) => {
+const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <React.Suspense fallback={<Loading />}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
@@ -32,4 +32,4 @@ const AppPrivider = ({ children }: AppProviderProps) => {
   );
 };
 
-export default AppPrivider;
+export default AppProvider;

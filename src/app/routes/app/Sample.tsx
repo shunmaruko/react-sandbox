@@ -1,3 +1,9 @@
+import { Authorization } from "@/lib/authorization";
+
 export const ProtectedSample = () => {
-  return <>This is sample protected page.</>;
+  return (
+    <Authorization allowedRoles={["ADMIN"]}>
+      <>Only admin user can access to this is sample.</>
+    </Authorization>
+  );
 };
