@@ -1,11 +1,11 @@
-import React from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 
-import { MainErrorFallback } from "@/components/Error";
+import { AuthLoader } from "@/app/lib/auth";
 import { queryClient } from "@/app/lib/react-query";
-import { AuthLoader } from "@/app/lib/Auth";
+import { MainErrorFallback } from "@/components/error";
 
 type AppProviderProps = {
   children: React.ReactNode;

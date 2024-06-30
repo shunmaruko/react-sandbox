@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-import { SampleResponseBody } from "@/features/sample/api";
 import { API_BASE_URL } from "@/config";
+import { SampleResponseBody } from "@/features/sample/api";
 
 const Users = () => {
   const { error } = useQuery({

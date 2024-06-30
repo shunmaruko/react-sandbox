@@ -1,8 +1,8 @@
-import { AuthHandlers } from "@/testing/mocks/handlers/auth";
-import { SampleHandlers } from "@/testing/mocks/handlers/sample";
 import { db } from "@/testing/mocks/db";
+import { authHandlers } from "@/testing/mocks/handlers/auth";
+import { sampleHandlers } from "@/testing/mocks/handlers/sample";
 export const handlers = [
-  ...AuthHandlers,
-  ...SampleHandlers,
+  ...authHandlers,
+  ...sampleHandlers,
   ...db.user.toHandlers("rest"),
 ];

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Layout } from "@/components/layouts/Landing";
+import { Layout } from "@/components/layouts/landing";
 import reactLogo from "@/assets/react.svg";
 
 import viteLogo from "/vite.svg";

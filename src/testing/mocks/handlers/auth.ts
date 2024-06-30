@@ -36,7 +36,7 @@ type RegisterResponseBody =
 
 type LogoutResponseBody = { message: string };
 
-export const AuthHandlers = [
+export const authHandlers = [
   http.post<RegisterParams, RegisterBody, RegisterResponseBody>(
     `${API_BASE_URL}auth/register`,
     async ({ request }) => {

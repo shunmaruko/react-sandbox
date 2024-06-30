@@ -1,33 +1,34 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ProtectedRoute } from "@/app/lib/Auth";
-import { AppRoot } from "@/app/routes/app/Route";
+
+import { ProtectedRoute } from "@/app/lib/auth";
+import { AppRoot } from "@/app/routes/app/route";
 const CreateRouter = () =>
   createBrowserRouter([
     {
       path: "/",
       lazy: async () => {
-        const { LandingRoute } = await import("./Landing");
+        const { LandingRoute } = await import("./landing");
         return { Component: LandingRoute };
       },
     },
     {
       path: "/auth/register",
       lazy: async () => {
-        const { RegisterRoute } = await import("./auth/Register");
+        const { RegisterRoute } = await import("./auth/register");
         return { Component: RegisterRoute };
       },
     },
     {
       path: "/auth/login",
       lazy: async () => {
-        const { LoginRoute } = await import("./auth/Login");
+        const { LoginRoute } = await import("./auth/login");
         return { Component: LoginRoute };
       },
     },
     {
       path: "/sample",
       lazy: async () => {
-        const { Sample } = await import("./Sample");
+        const { Sample } = await import("./sample");
         return { Component: Sample };
       },
     },
@@ -48,7 +49,7 @@ const CreateRouter = () =>
         {
           path: "sample",
           lazy: async () => {
-            const { ProtectedSample } = await import("./app/Sample");
+            const { ProtectedSample } = await import("./app/sample");
             return { Component: ProtectedSample };
           },
         },

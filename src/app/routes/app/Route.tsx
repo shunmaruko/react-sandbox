@@ -1,5 +1,6 @@
-import { useUser, useLogout } from "@/app/lib/Auth";
 import { Outlet } from "react-router-dom";
+
+import { useUser, useLogout } from "@/app/lib/auth";
 
 export const AppRoot = () => {
   const user = useUser();

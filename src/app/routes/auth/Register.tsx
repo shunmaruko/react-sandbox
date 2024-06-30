@@ -1,9 +1,9 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 
-import { Layout } from "@/components/layouts/AuthLayout";
-import { Form, FormChildrenProps } from "@/components/ui/form";
+import { useRegister } from "@/app/lib/auth";
 import { registerInputSchema, RegisterInput } from "@/app/lib/auth.type";
-import { useRegister } from "@/app/lib/Auth";
+import { Layout } from "@/components/layouts/auth-layout";
+import { Form, FormChildrenProps } from "@/components/ui/form";
 
 const RegisterFormChildren = ({
   register,
