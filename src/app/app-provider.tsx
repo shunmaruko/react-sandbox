@@ -3,9 +3,10 @@ import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 
-import { AuthLoader } from "@/lib/auth";
-import { queryClient } from "@/lib/react-query";
 import { MainErrorFallback } from "@/components/error";
+import { AuthLoader } from "@/lib/auth";
+import { UnauthorizedFallback } from "@/lib/authorization";
+import { queryClient } from "@/lib/react-query";
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -23,7 +24,9 @@ const AppPrivider = ({ children }: AppProviderProps) => {
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             <AuthLoader renderLoading={() => <>Loading ...</>}>
-              {children}
+              <ErrorBoundary FallbackComponent={UnauthorizedFallback}>
+                {children}
+              </ErrorBoundary>
             </AuthLoader>
           </QueryClientProvider>
         </HelmetProvider>
