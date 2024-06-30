@@ -28,6 +28,7 @@ export const saveDb = (model: Model) => {
 };
 
 export const resetDb = () => {
+  console.log("rest db called");
   window.localStorage.removeItem("msw-db");
 };
 
@@ -42,19 +43,21 @@ export const initializeDb = () => {
     }
   });
   // add sample users
-  db.user.create({
-    firstName: "Admin",
-    lastName: "Taro",
-    email: "admin@gmail.com",
-    role: "ADMIN",
-    password: hash("admin"),
+  const user = db.user.findFirst({
+    where: {
+      email: {
+        equals: "admin@gmail.com",
+      },
+    },
   });
-  db.user.create({
-    firstName: "User",
-    lastName: "Hanako",
-    email: "user@gmail.com",
-    role: "USER",
-    password: hash("user-hanako"),
-  });
-  saveDb("user");
+  if (!user) {
+    db.user.create({
+      firstName: "Admin",
+      lastName: "Taro",
+      email: "admin@gmail.com",
+      role: "ADMIN",
+      password: hash("admin"),
+    });
+    saveDb("user");
+  }
 };

@@ -1,10 +1,7 @@
-//import { worker } from "@/testing/mocks/browser";
-import { initializeDb, resetDb } from "@/testing/mocks/db";
-//resetDb();
+import { initializeDb } from "@/testing/mocks/db";
 
 export const enableMocking = async () => {
   const { worker } = await import("@/testing/mocks/browser");
-  resetDb();
   initializeDb();
   return worker.start({ onUnhandledRequest: "bypass" });
 };
