@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { ProtectedRoute } from "@/app/lib/auth";
+import { ProtectedRoute } from "@/lib/auth";
 import { AppRoot } from "@/app/routes/app/route";
 const CreateRouter = () =>
   createBrowserRouter([

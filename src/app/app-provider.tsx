@@ -3,8 +3,8 @@ import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HelmetProvider } from "react-helmet-async";
 
-import { AuthLoader } from "@/app/lib/auth";
-import { queryClient } from "@/app/lib/react-query";
+import { AuthLoader } from "@/lib/auth";
+import { queryClient } from "@/lib/react-query";
 import { MainErrorFallback } from "@/components/error";
 
 type AppProviderProps = {

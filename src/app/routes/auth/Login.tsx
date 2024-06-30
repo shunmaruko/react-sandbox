@@ -1,7 +1,7 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 
-import { useLogin } from "@/app/lib/auth";
-import { loginInputSchema, LoginInput } from "@/app/lib/auth.type";
+import { useLogin } from "@/lib/auth";
+import { loginInputSchema, LoginInput } from "@/lib/auth.type";
 import { Layout } from "@/components/layouts/auth-layout";
 import { Form, FormChildrenProps } from "@/components/ui/form";
 

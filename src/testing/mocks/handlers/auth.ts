@@ -1,6 +1,6 @@
 import { HttpResponse, http, delay, PathParams } from "msw";
 
-import { RegisterInput, LoginInput } from "@/app/lib/auth.type";
+import { RegisterInput, LoginInput } from "@/lib/auth.type";
 import { API_BASE_URL } from "@/config";
 import { saveDb, db } from "@/testing/mocks/db";
 import {
