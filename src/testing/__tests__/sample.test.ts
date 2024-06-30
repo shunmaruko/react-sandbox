@@ -1,9 +1,9 @@
-import hoge, { foo, bar } from "./sample";
+import hoge, { foo, bar } from "../sample";
 
-beforeAll(() => console.log("1 - beforeAll"));
-afterAll(() => console.log("1 - afterAll"));
-beforeEach(() => console.log("1 - beforeEach"));
-afterEach(() => console.log("1 - afterEach"));
+beforeAll(() => console.error("1 - beforeAll"));
+afterAll(() => console.error("1 - afterAll"));
+beforeEach(() => console.error("1 - beforeEach"));
+afterEach(() => console.error("1 - afterEach"));
 
 test("sample", () => {
   console.log("1 - test");
@@ -23,14 +23,14 @@ describe("Scoped / Nested block", () => {
   test("", () => console.log("2 - test"));
 });
 
-jest.mock("./sample", () => {
-  const originalModule = jest.requireActual("./sample");
+vi.mock("./sample", async () => {
+  const originalModule = await vi.importActual("./sample");
 
   //Mock the default export and named export 'foo'
   return {
     __esModule: true,
     ...originalModule,
-    default: jest
+    default: vi
       .fn()
       .mockImplementationOnce(() => "mocked hoge 1")
       .mockImplementationOnce(() => "mocked hoge 2"),

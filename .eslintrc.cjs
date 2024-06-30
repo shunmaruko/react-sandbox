@@ -14,12 +14,6 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "no-console": [
-      "error",
-      {
-        allow: ["warn", "error"],
-      },
-    ],
     "no-else-return": "error",
     "linebreak-style": ["error", "unix"],
     // TODO: set import/no-restricted-paths
@@ -40,6 +34,7 @@ module.exports = {
         unnamedComponents: "arrow-function",
       },
     ],
+    "react/jsx-max-depth": ["error", { max: 5 }],
   },
   overrides: [
     {
@@ -67,7 +62,7 @@ module.exports = {
           },
           {
             selector: "variable",
-            format: ["strictCamelCase"],
+            format: ["StrictPascalCase"],
             types: ["boolean"],
             prefix: ["is", "should"],
           },
@@ -75,7 +70,7 @@ module.exports = {
             selector: "variable",
             modifiers: ["const", "exported"],
             types: ["function"],
-            format: ["StrictPascalCase"],
+            format: ["StrictPascalCase", "camelCase"],
           },
           {
             selector: "typeAlias",
@@ -86,32 +81,20 @@ module.exports = {
             format: ["camelCase", "PascalCase"],
           },
         ],
+        "@typescript-eslint/no-explicit-any": ["off"],
       },
     },
     {
       // except index.tsx
-      files: ["**/*.tsx", "**/*.ts", "!**/index.tsx"],
+      files: ["**/*.tsx", "**/*.ts"],
       rules: {
         "check-file/filename-naming-convention": [
           "error",
           {
-            "**/*.tsx": "PASCAL_CASE",
-            "**/*.ts": "KEBAB_CASE",
+            "**/*.{ts,tsx}": "KEBAB_CASE",
           },
           {
             ignoreMiddleExtensions: true,
-          },
-        ],
-      },
-    },
-    {
-      // for index.tsx
-      files: ["**/index.tsx"],
-      rules: {
-        "check-file/filename-naming-convention": [
-          "error",
-          {
-            "**/*": "CAMEL_CASE",
           },
         ],
       },
@@ -123,6 +106,12 @@ module.exports = {
           "error",
           {
             "**/*": "KEBAB_CASE",
+          },
+        ],
+        "no-console": [
+          "error",
+          {
+            allow: ["warn", "error"],
           },
         ],
       },
