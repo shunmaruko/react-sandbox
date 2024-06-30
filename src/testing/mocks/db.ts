@@ -50,11 +50,11 @@ export const initializeDb = () => {
     password: hash("admin"),
   });
   db.user.create({
-    firstName: "General",
+    firstName: "User",
     lastName: "Hanako",
-    email: "general@gmail.com",
-    role: "GENERAL",
-    password: hash("general"),
+    email: "user@gmail.com",
+    role: "USER",
+    password: hash("user"),
   });
   saveDb("user");
 };

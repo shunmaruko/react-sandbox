@@ -23,8 +23,8 @@ describe("Scoped / Nested block", () => {
   test("", () => console.log("2 - test"));
 });
 
-vi.mock("./sample", async () => {
-  const originalModule = await vi.importActual("./sample");
+vi.mock("../sample", async () => {
+  const originalModule = await vi.importActual("../sample");
 
   //Mock the default export and named export 'foo'
   return {
@@ -41,6 +41,7 @@ vi.mock("./sample", async () => {
 test("test partial mock", () => {
   const actual = hoge();
   //defaule exported hoge is mocked
+  console.log(actual);
   expect(actual).toBe("mocked hoge 1");
   // confirm mocked function called
   expect(hoge).toHaveBeenCalled();

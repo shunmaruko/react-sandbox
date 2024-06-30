@@ -16,7 +16,7 @@ const Loading = () => {
   return <h2>🌀 Loading...</h2>;
 };
 
-const AppPrivider = ({ children }: AppProviderProps) => {
+const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <React.Suspense fallback={<Loading />}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
@@ -32,4 +32,4 @@ const AppPrivider = ({ children }: AppProviderProps) => {
   );
 };
 
-export default AppPrivider;
+export default AppProvider;
