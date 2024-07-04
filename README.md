@@ -28,3 +28,39 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+# API clinet
+
+We use openapi-codegen to automatically generate fetch api(as api client) and react query (as react query).
+
+To add new apis, you can proceed with the following steps.
+
+1. Edit openapi.yaml.
+
+1. Generate client by 'npm run gen-api'
+
+1. Import components,
+
+```ts
+import { useXXX } from "@/auto-generated/sandboxComponents";
+
+const SomeComponent = () =>{
+    const { data, error, isLoading } = useXXX(...);
+    if (error) {
+    return (
+      <div>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+      </div>
+    );
+    if (isLoading){
+      return (<div>Loading…</div>)
+    }
+    return (
+      <>
+      // implement using data
+      </>
+    )
+
+  }
+}
+```
