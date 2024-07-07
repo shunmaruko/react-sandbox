@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    image: sandbox-frontend
+    container_name: sandbox-frontend
+    ports:
+      - 5173:5173
+    stdin_open: true
+  redis:
+    build:
+      context: backend/redis
+      dockerfile: Dockerfile
+    container_name: redis
+    ports:
+      - 6379:6379

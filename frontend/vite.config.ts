@@ -12,4 +12,7 @@ export default defineConfig({
     globals: true,
     environment: "happy-dom",
   },
+  server: {
+    host: true,
+  },
 });
