@@ -11,7 +11,9 @@ services:
       - 5173:5173
     stdin_open: true
   redis:
-    image: redis
+    build:
+      context: backend/redis
+      dockerfile: Dockerfile
     container_name: redis
     ports:
       - 6379:6379
