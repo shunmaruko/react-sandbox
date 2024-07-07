@@ -23,24 +23,24 @@ react-ts-sandbox$ docker build --tag sandbox-frontend .
 To run it on container,
 
 ```sh
-react-ts-sandbox$ docker run -d  -p 5173:5173 --name sandbox-frontend sandbox-frontend
+react-ts-sandbox$ docker run -it --rm  -p 5173:5173 sandbox-frontend
 ```
 
-- `-d`
+- `-it`
 
-  Run on background
+  Interactive mode.
+
+- `--rm`
+
+  Container is removerd when exit.
 
 - `-p [host port]:[container port]`
 
-  Port forwarding from conntainer to host port.
-
-- `--name container-name`
-
-  (Optional)Specify container name.
+  Port forwarding from container to host port.
 
 Now you can access to [http://localhost:5173/](http://localhost:5173/).
 
-To stop and remove container, you can run
+(Optional)To stop and remove container manually, you can run
 
 ```sh
 react-ts-sandbox$ docker rm -f sandbox-frontend
