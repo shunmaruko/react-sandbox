@@ -1,0 +1,228 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: shunmaruko@gmail.com
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
+
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Petstore - OpenAPI 3.0
+  version: 1.0.11
+servers:
+- url: https://sandbox.swagger.io/api/v1
+tags:
+- description: Everything about your Pets
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+  name: pet
+- description: Authentication or authorization
+  name: auth
+paths:
+  /:
+    get:
+      description: Sample description.
+      operationId: root__get
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Root
+  /auth/me:
+    get:
+      description: Return user info if authed.
+      operationId: get_user_auth_me_get
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+      summary: Get User
+      tags:
+      - auth
+  /auth/login:
+    post:
+      description: Login.
+      operationId: login_auth_login_post
+      parameters:
+      - explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          format: email
+          title: Email
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: password
+        required: true
+        schema:
+          title: Password
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Login
+      tags:
+      - auth
+  /auth/register:
+    post:
+      description: Register.
+      operationId: register_auth_register_post
+      parameters:
+      - explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          format: email
+          title: Email
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: role
+        required: true
+        schema:
+          title: Role
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: password
+        required: true
+        schema:
+          title: Password
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Register
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      description: Logout.
+      operationId: logout_auth_logout_post
+      responses:
+        "204":
+          description: No content
+      summary: Logout
+      tags:
+      - auth
+components:
+  schemas:
+    Message:
+      description: Simply return message.
+      example:
+        message: message
+      properties:
+        message:
+          title: message
+          type: string
+      title: Message
+    User:
+      example:
+        roles:
+        - roles
+        - roles
+        email: email
+      properties:
+        email:
+          description: User email
+          format: email
+          title: email
+          type: string
+        roles:
+          description: A list of roles assigned to the user
+          items:
+            type: string
+          title: roles
+          type: array
+      title: User
+      type: object
+    HTTPValidationError:
+      example:
+        detail:
+        - msg: msg
+          loc:
+          - loc
+          - loc
+          type: type
+        - msg: msg
+          loc:
+          - loc
+          - loc
+          type: type
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ValidationError:
+      example:
+        msg: msg
+        loc:
+        - loc
+        - loc
+        type: type
+      properties:
+        loc:
+          items:
+            type: string
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
