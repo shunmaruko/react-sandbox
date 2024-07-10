@@ -17,3 +17,11 @@ services:
     container_name: redis
     ports:
       - 6379:6379
+  service:
+    build:
+      context: backend/api_auto_generated
+      dockerfile: Dockerfile
+      target: service
+    ports:
+      - "8080:8080"
+    command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080
