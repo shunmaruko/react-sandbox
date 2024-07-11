@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
     "test": "vitest ",
-    "gen-api": "npx openapi-codegen gen sandbox"
+    "gen-api": "npx openapi-codegen gen --relativePath ../schema/openapi.yaml sandbox"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
