@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   service:
-    image: react-ts-sandbox:test
+    image: react-ts-sandbox-api:dev
     volumes:
       - type: bind
         source: .
@@ -10,7 +10,7 @@ services:
     build:
       context: .
       target: service
-      dockerfile: Dockerfile.test
+      dockerfile: Dockerfile.dev
     ports:
       - "8080:8080" 
     command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080 --reload
