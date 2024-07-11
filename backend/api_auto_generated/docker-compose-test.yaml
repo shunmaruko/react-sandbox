@@ -1,11 +1,16 @@
 version: '3.6'
 services:
   service:
+    image: react-ts-sandbox:test
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - /app/.venv/ # This line hides mapping of venv folder in the container
     build:
       context: .
       target: service
       dockerfile: Dockerfile.test
-    image: react-ts-sandbox:test
     ports:
-      - "8080:8080"
-    command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080
+      - "8080:8080" 
+    command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080 --reload
