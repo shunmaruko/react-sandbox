@@ -35,7 +35,7 @@ class ValidationError(BaseModel):
     loc: List[StrictStr]
     msg: StrictStr
     type: StrictStr
-    __properties: ClassVar[List[str]] = ["loc", "msg", "type"]
+    __properties: ClassVar[list[str]] = ["loc", "msg", "type"]
 
     model_config = {
         "populate_by_name": True,

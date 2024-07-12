@@ -13,12 +13,11 @@ class BaseAuthApi:
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         BaseAuthApi.subclasses = BaseAuthApi.subclasses + (cls,)
-    def get_user_auth_me_get(
+    def get_user_auth_me(
         self,
     ) -> User:
         """Return user info if authed."""
         ...
-
 
 
     def login_auth_login_post(

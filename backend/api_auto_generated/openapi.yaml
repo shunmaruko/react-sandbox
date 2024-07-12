@@ -20,7 +20,7 @@ info:
   title: Swagger Petstore - OpenAPI 3.0
   version: 1.0.11
 servers:
-- url: https://sandbox.swagger.io/api/v1
+- url: http://backend/
 tags:
 - description: Everything about your Pets
   externalDocs:
@@ -30,7 +30,7 @@ tags:
 - description: Authentication or authorization
   name: auth
 paths:
-  /:
+  /v1:
     get:
       description: Sample description.
       operationId: root__get
@@ -41,10 +41,10 @@ paths:
               schema: {}
           description: Successful Response
       summary: Root
-  /auth/me:
+  /v1/auth/me:
     get:
       description: Return user info if authed.
-      operationId: get_user_auth_me_get
+      operationId: get_user_auth_me
       responses:
         "200":
           content:
@@ -55,7 +55,7 @@ paths:
       summary: Get User
       tags:
       - auth
-  /auth/login:
+  /v1/auth/login:
     post:
       description: Login.
       operationId: login_auth_login_post
@@ -93,7 +93,7 @@ paths:
       summary: Login
       tags:
       - auth
-  /auth/register:
+  /v1/auth/register:
     post:
       description: Register.
       operationId: register_auth_register_post
@@ -139,7 +139,7 @@ paths:
       summary: Register
       tags:
       - auth
-  /auth/logout:
+  /v1/auth/logout:
     post:
       description: Logout.
       operationId: logout_auth_logout_post

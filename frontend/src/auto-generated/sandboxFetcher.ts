@@ -1,6 +1,6 @@
 import { SandboxContext } from "./sandboxContext";
 
-const baseUrl = "https://sandbox.swagger.io/api/v1";
+const baseUrl = "http://backend/";
 
 export type ErrorWrapper<TError> =
   | TError

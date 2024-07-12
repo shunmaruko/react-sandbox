@@ -1,6 +1,6 @@
 version: '3.6'
 services:
-  service:
+  backend:
     image: react-ts-sandbox-api:dev
     volumes:
       - type: bind

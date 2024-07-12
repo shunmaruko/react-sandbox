@@ -21,7 +21,7 @@ export const fetchRootGet = (
   signal?: AbortSignal,
 ) =>
   sandboxFetch<void, RootGetError, undefined, {}, {}, {}>({
-    url: "/",
+    url: "/v1",
     method: "get",
     ...variables,
     signal,
@@ -40,7 +40,7 @@ export const useRootGet = <TData = void,>(
   const { fetcherOptions, queryOptions, queryKeyFn } =
     useSandboxContext(options);
   return reactQuery.useQuery<void, RootGetError, TData>({
-    queryKey: queryKeyFn({ path: "/", operationId: "rootGet", variables }),
+    queryKey: queryKeyFn({ path: "/v1", operationId: "rootGet", variables }),
     queryFn: ({ signal }) =>
       fetchRootGet({ ...fetcherOptions, ...variables }, signal),
     ...options,
@@ -60,7 +60,7 @@ export const fetchGetUserAuthMe = (
   signal?: AbortSignal,
 ) =>
   sandboxFetch<Schemas.User, GetUserAuthMeError, undefined, {}, {}, {}>({
-    url: "/auth/me",
+    url: "/v1/auth/me",
     method: "get",
     ...variables,
     signal,
@@ -80,7 +80,7 @@ export const useGetUserAuthMe = <TData = Schemas.User,>(
     useSandboxContext(options);
   return reactQuery.useQuery<Schemas.User, GetUserAuthMeError, TData>({
     queryKey: queryKeyFn({
-      path: "/auth/me",
+      path: "/v1/auth/me",
       operationId: "getUserAuthMe",
       variables,
     }),
@@ -122,7 +122,7 @@ export const fetchLoginAuthLoginPost = (
     {},
     LoginAuthLoginPostQueryParams,
     {}
-  >({ url: "/auth/login", method: "post", ...variables, signal });
+  >({ url: "/v1/auth/login", method: "post", ...variables, signal });
 
 /**
  * Login.
@@ -181,7 +181,7 @@ export const fetchRegisterAuthRegisterPost = (
     {},
     RegisterAuthRegisterPostQueryParams,
     {}
-  >({ url: "/auth/register", method: "post", ...variables, signal });
+  >({ url: "/v1/auth/register", method: "post", ...variables, signal });
 
 /**
  * Register.
@@ -220,7 +220,7 @@ export const fetchLogoutAuthLogoutPost = (
   signal?: AbortSignal,
 ) =>
   sandboxFetch<undefined, LogoutAuthLogoutPostError, undefined, {}, {}, {}>({
-    url: "/auth/logout",
+    url: "/v1/auth/logout",
     method: "post",
     ...variables,
     signal,
@@ -253,12 +253,12 @@ export const useLogoutAuthLogoutPost = (
 
 export type QueryOperation =
   | {
-      path: "/";
+      path: "/v1";
       operationId: "rootGet";
       variables: RootGetVariables;
     }
   | {
-      path: "/auth/me";
+      path: "/v1/auth/me";
       operationId: "getUserAuthMe";
       variables: GetUserAuthMeVariables;
     };
