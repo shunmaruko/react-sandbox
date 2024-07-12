@@ -1,6 +1,6 @@
 import { SandboxContext } from "./sandboxContext";
 
-const baseUrl = "https://api.github.com";
+const baseUrl = "http://backend/";
 
 export type ErrorWrapper<TError> =
   | TError

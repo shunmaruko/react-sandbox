@@ -35,7 +35,7 @@ for _, name, _ in pkgutil.iter_modules(ns_pkg.__path__, ns_pkg.__name__ + "."):
 
 
 @router.get(
-    "/auth/me",
+    "/v1/auth/me",
     responses={
         200: {"model": User, "description": "Successful Response"},
     },
@@ -43,14 +43,14 @@ for _, name, _ in pkgutil.iter_modules(ns_pkg.__path__, ns_pkg.__name__ + "."):
     summary="Get User",
     response_model_by_alias=True,
 )
-async def get_user_auth_me_get(
+async def get_user_auth_me(
 ) -> User:
     """Return user info if authed."""
-    return BaseAuthApi.subclasses[0]().get_user_auth_me_get()
+    return BaseAuthApi.subclasses[0]().get_user_auth_me()
 
 
 @router.post(
-    "/auth/login",
+    "/v1/auth/login",
     responses={
         200: {"model": User, "description": "Successful Response"},
         422: {"model": HTTPValidationError, "description": "Validation Error"},
@@ -68,7 +68,7 @@ async def login_auth_login_post(
 
 
 @router.post(
-    "/auth/logout",
+    "/v1/auth/logout",
     responses={
         204: {"description": "No content"},
     },
@@ -83,7 +83,7 @@ async def logout_auth_logout_post(
 
 
 @router.post(
-    "/auth/register",
+    "/v1/auth/register",
     responses={
         200: {"model": Message, "description": "Successful Response"},
         422: {"model": HTTPValidationError, "description": "Validation Error"},

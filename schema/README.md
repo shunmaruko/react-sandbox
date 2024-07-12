@@ -15,6 +15,10 @@ General steps:
       ```sh
       react-ts-sandbox/schema $ openapi-generator generate -i openapi.yaml -t backend-template -g python-fastapi -o ../backend/api_auto_generated
       ```
+    Also, you can generate both server/client code at once by
+      ```sh
+      react-ts-sandbox/schema $ ./generate.sh
+      ```
       
   1. Add impl code.
   
@@ -29,5 +33,5 @@ General steps:
 
 ## TODO
     - Curently docker rebuild package when files under src are edited. This is because, openapi_server is packaged and regarded as part of python module. To improve the performance we should add layer that only install third party library, and then add apis.
-    
+
 # Frontend

@@ -32,7 +32,7 @@ for _, name, _ in pkgutil.iter_modules(ns_pkg.__path__, ns_pkg.__name__ + "."):
 
 
 @router.get(
-    "/",
+    "/v1",
     responses={
         200: {"model": object, "description": "Successful Response"},
     },

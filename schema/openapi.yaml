@@ -20,7 +20,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.11
 servers:
-  - url: https://sandbox.swagger.io/api/v1
+  - url: http://backend/
 tags:
   - name: pet
     description: Everything about your Pets
@@ -30,7 +30,7 @@ tags:
   - name: auth
     description: Authentication or authorization
 paths:
-  "/":
+  "/v1":
     get:
       description: "Sample description."
       summary: Root
@@ -41,7 +41,7 @@ paths:
           content:
             application/json:
               schema: {}
-  "/auth/me":
+  "/v1/auth/me":
     get:
       description: "Return user info if authed."
       tags:
@@ -55,7 +55,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-  "/auth/login":
+  "/v1/auth/login":
     post:
       description: "Login."
       tags:
@@ -89,7 +89,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
-  "/auth/register":
+  "/v1/auth/register":
     post:
       description: "Register."
       tags:
@@ -129,7 +129,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
-  "/auth/logout":
+  "/v1/auth/logout":
     post:
       description: "Logout."
       tags:
