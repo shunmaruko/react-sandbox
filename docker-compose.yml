@@ -21,7 +21,7 @@ services:
     container_name: backend
     build:
       context: backend/api_auto_generated
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       target: service
     ports:
       - "8080:8080"

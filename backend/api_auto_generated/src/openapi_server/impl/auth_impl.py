@@ -4,7 +4,8 @@ from openapi_server.apis.auth_api_base import BaseAuthApi
 
 class AuthApiImpl(BaseAuthApi):
     def get_user_auth_me_get(self) -> User:
-        return User(email="hoge@gmail.com", roles=["ADMIN", "GENERAL"])
+        #print(User(email="hoge@gmail.com", roles=["ADMIN", "GENERAL"]))
+        return User(email="hoge@gmail.com", roles=["ADMIN"])
     
     def login_auth_login_post(self, email: str, password: str) -> User:
         return User(email=email)

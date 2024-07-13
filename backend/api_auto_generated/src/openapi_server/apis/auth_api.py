@@ -46,7 +46,7 @@ for _, name, _ in pkgutil.iter_modules(ns_pkg.__path__, ns_pkg.__name__ + "."):
 async def get_user_auth_me(
 ) -> User:
     """Return user info if authed."""
-    return BaseAuthApi.subclasses[0]().get_user_auth_me()
+    return BaseAuthApi.subclasses[0]().get_user_auth_me_get()
 
 
 @router.post(
