@@ -6,11 +6,11 @@ from fastapi import FastAPI, status, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import EmailStr
 
-from backend.api_org.schema import UserDTO
+from api_org.schema import UserDTO
 
 app = FastAPI()
 
-_AUTH_COOKIE: Final[str] = "react-ts-sandbox-server"
+_AUTH_COOKIE: Final[str] = "react-ts-sandbox-server-test"
 
 @app.get("/")
 async def root():

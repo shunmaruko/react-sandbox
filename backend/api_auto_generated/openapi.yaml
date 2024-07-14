@@ -130,6 +130,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
           description: Successful Response
+          headers:
+            Set-Cookie:
+              explode: false
+              schema:
+                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+                type: string
+              style: simple
         "422":
           content:
             application/json:
