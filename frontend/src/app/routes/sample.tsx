@@ -16,7 +16,7 @@ const Users = () => {
 
 const ApiCallSample = () => {
   console.log("api call sample.");
-  axios.get('http://localhost:80/v1/auth/me')
+  axios.get('http://0.0.0.0:80/v1/auth/me')
   .then(function (response) {
     console.log("success")
     console.log(response.data);
