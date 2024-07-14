@@ -1,4 +1,5 @@
 # coding: utf-8
+from abc import ABC
 
 from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 
@@ -7,7 +8,7 @@ from openapi_server.models.message import Message
 from openapi_server.models.user import User
 
 
-class BaseAuthApi:
+class BaseAuthApi(ABC):
     subclasses: ClassVar[Tuple] = ()
 
     def __init_subclass__(cls, **kwargs):

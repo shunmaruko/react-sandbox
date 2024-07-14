@@ -15,20 +15,6 @@ const Users = () => {
 };
 
 const ApiCallSample = () => {
-  console.log("api call sample.");
-  axios.get('http://0.0.0.0:80/v1/auth/me')
-  .then(function (response) {
-    console.log("success")
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .finally(function () {
-    console.log("finally")
-  });
-
   const {data, error, isLoading} = useGetUserAuthMe({});
   if (isLoading){
     return (
@@ -46,7 +32,7 @@ const ApiCallSample = () => {
   console.log(data);
   return (
     <>
-        <>'Email: ${data?.email}`</>
+        <>Email: {data?.email}</>
         <ul>
         {data?.roles?.map((role) => <li key={role}>{role}</li>)}
         </ul>
@@ -65,8 +51,8 @@ export const Sample = () => {
 
   return (
     <>
-      {/* <>{`Sample foo: ${data ? data.foo : "undefined"} bar: ${data ? data.hoge : "undefined"}`}</>
-      <div>{isFetching ? "Updating..." : ""}</div> */}
+      <>{`Sample foo: ${data ? data.foo : "undefined"} bar: ${data ? data.hoge : "undefined"}`}</>
+      <div>{isFetching ? "Updating..." : ""}</div>
       <Users />
       <ApiCallSample/>
     </>

@@ -1,10 +1,11 @@
 # coding: utf-8
+from abc import ABC
 
 from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 
 
 
-class BaseDefaultApi:
+class BaseDefaultApi(ABC):
     subclasses: ClassVar[Tuple] = ()
 
     def __init_subclass__(cls, **kwargs):
