@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { API_BASE_URL } from "@/config";
 import { SampleResponseBody } from "@/features/sample/api";
-import {useGetUserAuthMe} from "@/auto-generated/sandboxComponents"
+import {useMe} from "@/auto-generated/sandboxComponents"
 
 const Users = () => {
   const { error } = useQuery({
@@ -15,7 +15,7 @@ const Users = () => {
 };
 
 const ApiCallSample = () => {
-  const {data, error, isLoading} = useGetUserAuthMe({});
+  const {data, error, isLoading} = useMe({});
   if (isLoading){
     return (
       <div>Loading…</div>

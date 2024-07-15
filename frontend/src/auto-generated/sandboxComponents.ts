@@ -48,18 +48,89 @@ export const useRootGet = <TData = void,>(
   });
 };
 
-export type GetUserAuthMeError = Fetcher.ErrorWrapper<undefined>;
+export type AuthorizationQueryParams = {
+  response_type: "token";
+  /**
+   * The client identifier. We use email as it.
+   */
+  client_id: string;
+  /**
+   * The URI to redirect to after authorization.
+   *
+   * @format uri
+   * @default
+   */
+  redirect_uri?: string;
+  /**
+   * A list of scopes expressed as a list of space-delimited, case-sensitive strings. default is [general]
+   *
+   * @default general
+   */
+  scope?: string[];
+  /**
+   * RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.
+   *
+   * @default
+   */
+  state?: string;
+};
 
-export type GetUserAuthMeVariables = SandboxContext["fetcherOptions"];
+export type AuthorizationError = Fetcher.ErrorWrapper<undefined>;
+
+export type AuthorizationVariables = {
+  queryParams: AuthorizationQueryParams;
+} & SandboxContext["fetcherOptions"];
+
+/**
+ * Authorization Request spec. For detail, see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.
+ */
+export const fetchAuthorization = (
+  variables: AuthorizationVariables,
+  signal?: AbortSignal,
+) =>
+  sandboxFetch<
+    undefined,
+    AuthorizationError,
+    undefined,
+    {},
+    AuthorizationQueryParams,
+    {}
+  >({ url: "/v1/auth/authorization", method: "get", ...variables, signal });
+
+/**
+ * Authorization Request spec. For detail, see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.
+ */
+export const useAuthorization = <TData = undefined,>(
+  variables: AuthorizationVariables,
+  options?: Omit<
+    reactQuery.UseQueryOptions<undefined, AuthorizationError, TData>,
+    "queryKey" | "queryFn" | "initialData"
+  >,
+) => {
+  const { fetcherOptions, queryOptions, queryKeyFn } =
+    useSandboxContext(options);
+  return reactQuery.useQuery<undefined, AuthorizationError, TData>({
+    queryKey: queryKeyFn({
+      path: "/v1/auth/authorization",
+      operationId: "authorization",
+      variables,
+    }),
+    queryFn: ({ signal }) =>
+      fetchAuthorization({ ...fetcherOptions, ...variables }, signal),
+    ...options,
+    ...queryOptions,
+  });
+};
+
+export type MeError = Fetcher.ErrorWrapper<undefined>;
+
+export type MeVariables = SandboxContext["fetcherOptions"];
 
 /**
  * Return user info if authed.
  */
-export const fetchGetUserAuthMe = (
-  variables: GetUserAuthMeVariables,
-  signal?: AbortSignal,
-) =>
-  sandboxFetch<Schemas.User, GetUserAuthMeError, undefined, {}, {}, {}>({
+export const fetchMe = (variables: MeVariables, signal?: AbortSignal) =>
+  sandboxFetch<Schemas.User, MeError, undefined, {}, {}, {}>({
     url: "/v1/auth/me",
     method: "get",
     ...variables,
@@ -69,29 +140,25 @@ export const fetchGetUserAuthMe = (
 /**
  * Return user info if authed.
  */
-export const useGetUserAuthMe = <TData = Schemas.User,>(
-  variables: GetUserAuthMeVariables,
+export const useMe = <TData = Schemas.User,>(
+  variables: MeVariables,
   options?: Omit<
-    reactQuery.UseQueryOptions<Schemas.User, GetUserAuthMeError, TData>,
+    reactQuery.UseQueryOptions<Schemas.User, MeError, TData>,
     "queryKey" | "queryFn" | "initialData"
   >,
 ) => {
   const { fetcherOptions, queryOptions, queryKeyFn } =
     useSandboxContext(options);
-  return reactQuery.useQuery<Schemas.User, GetUserAuthMeError, TData>({
-    queryKey: queryKeyFn({
-      path: "/v1/auth/me",
-      operationId: "getUserAuthMe",
-      variables,
-    }),
+  return reactQuery.useQuery<Schemas.User, MeError, TData>({
+    queryKey: queryKeyFn({ path: "/v1/auth/me", operationId: "me", variables }),
     queryFn: ({ signal }) =>
-      fetchGetUserAuthMe({ ...fetcherOptions, ...variables }, signal),
+      fetchMe({ ...fetcherOptions, ...variables }, signal),
     ...options,
     ...queryOptions,
   });
 };
 
-export type LoginAuthLoginPostQueryParams = {
+export type LoginQueryParams = {
   /**
    * @format email
    */
@@ -99,127 +166,100 @@ export type LoginAuthLoginPostQueryParams = {
   password: string;
 };
 
-export type LoginAuthLoginPostError = Fetcher.ErrorWrapper<{
+export type LoginError = Fetcher.ErrorWrapper<{
   status: 422;
   payload: Schemas.HTTPValidationError;
 }>;
 
-export type LoginAuthLoginPostVariables = {
-  queryParams: LoginAuthLoginPostQueryParams;
+export type LoginVariables = {
+  queryParams: LoginQueryParams;
 } & SandboxContext["fetcherOptions"];
 
 /**
  * Login.
  */
-export const fetchLoginAuthLoginPost = (
-  variables: LoginAuthLoginPostVariables,
-  signal?: AbortSignal,
-) =>
-  sandboxFetch<
-    Schemas.User,
-    LoginAuthLoginPostError,
-    undefined,
-    {},
-    LoginAuthLoginPostQueryParams,
-    {}
-  >({ url: "/v1/auth/login", method: "post", ...variables, signal });
+export const fetchLogin = (variables: LoginVariables, signal?: AbortSignal) =>
+  sandboxFetch<Schemas.User, LoginError, undefined, {}, LoginQueryParams, {}>({
+    url: "/v1/auth/login",
+    method: "post",
+    ...variables,
+    signal,
+  });
 
 /**
  * Login.
  */
-export const useLoginAuthLoginPost = (
+export const useLogin = (
   options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.User,
-      LoginAuthLoginPostError,
-      LoginAuthLoginPostVariables
-    >,
+    reactQuery.UseMutationOptions<Schemas.User, LoginError, LoginVariables>,
     "mutationFn"
   >,
 ) => {
   const { fetcherOptions } = useSandboxContext();
-  return reactQuery.useMutation<
-    Schemas.User,
-    LoginAuthLoginPostError,
-    LoginAuthLoginPostVariables
-  >({
-    mutationFn: (variables: LoginAuthLoginPostVariables) =>
-      fetchLoginAuthLoginPost({ ...fetcherOptions, ...variables }),
+  return reactQuery.useMutation<Schemas.User, LoginError, LoginVariables>({
+    mutationFn: (variables: LoginVariables) =>
+      fetchLogin({ ...fetcherOptions, ...variables }),
     ...options,
   });
 };
 
-export type RegisterAuthRegisterPostQueryParams = {
+export type RegisterQueryParams = {
   /**
    * @format email
    */
   email: string;
-  role: string;
   password: string;
 };
 
-export type RegisterAuthRegisterPostError = Fetcher.ErrorWrapper<{
+export type RegisterError = Fetcher.ErrorWrapper<{
   status: 422;
   payload: Schemas.HTTPValidationError;
 }>;
 
-export type RegisterAuthRegisterPostVariables = {
-  queryParams: RegisterAuthRegisterPostQueryParams;
+export type RegisterVariables = {
+  queryParams: RegisterQueryParams;
 } & SandboxContext["fetcherOptions"];
 
 /**
  * Register.
  */
-export const fetchRegisterAuthRegisterPost = (
-  variables: RegisterAuthRegisterPostVariables,
+export const fetchRegister = (
+  variables: RegisterVariables,
   signal?: AbortSignal,
 ) =>
-  sandboxFetch<
-    Schemas.Message,
-    RegisterAuthRegisterPostError,
-    undefined,
-    {},
-    RegisterAuthRegisterPostQueryParams,
-    {}
-  >({ url: "/v1/auth/register", method: "post", ...variables, signal });
+  sandboxFetch<void, RegisterError, undefined, {}, RegisterQueryParams, {}>({
+    url: "/v1/auth/register",
+    method: "post",
+    ...variables,
+    signal,
+  });
 
 /**
  * Register.
  */
-export const useRegisterAuthRegisterPost = (
+export const useRegister = (
   options?: Omit<
-    reactQuery.UseMutationOptions<
-      Schemas.Message,
-      RegisterAuthRegisterPostError,
-      RegisterAuthRegisterPostVariables
-    >,
+    reactQuery.UseMutationOptions<void, RegisterError, RegisterVariables>,
     "mutationFn"
   >,
 ) => {
   const { fetcherOptions } = useSandboxContext();
-  return reactQuery.useMutation<
-    Schemas.Message,
-    RegisterAuthRegisterPostError,
-    RegisterAuthRegisterPostVariables
-  >({
-    mutationFn: (variables: RegisterAuthRegisterPostVariables) =>
-      fetchRegisterAuthRegisterPost({ ...fetcherOptions, ...variables }),
+  return reactQuery.useMutation<void, RegisterError, RegisterVariables>({
+    mutationFn: (variables: RegisterVariables) =>
+      fetchRegister({ ...fetcherOptions, ...variables }),
     ...options,
   });
 };
 
-export type LogoutAuthLogoutPostError = Fetcher.ErrorWrapper<undefined>;
+export type LogoutError = Fetcher.ErrorWrapper<undefined>;
 
-export type LogoutAuthLogoutPostVariables = SandboxContext["fetcherOptions"];
+export type LogoutVariables = SandboxContext["fetcherOptions"];
 
 /**
  * Logout.
  */
-export const fetchLogoutAuthLogoutPost = (
-  variables: LogoutAuthLogoutPostVariables,
-  signal?: AbortSignal,
-) =>
-  sandboxFetch<undefined, LogoutAuthLogoutPostError, undefined, {}, {}, {}>({
+export const fetchLogout = (variables: LogoutVariables, signal?: AbortSignal) =>
+  sandboxFetch<undefined, LogoutError, undefined, {}, {}, {}>({
     url: "/v1/auth/logout",
     method: "post",
     ...variables,
@@ -229,24 +269,16 @@ export const fetchLogoutAuthLogoutPost = (
 /**
  * Logout.
  */
-export const useLogoutAuthLogoutPost = (
+export const useLogout = (
   options?: Omit<
-    reactQuery.UseMutationOptions<
-      undefined,
-      LogoutAuthLogoutPostError,
-      LogoutAuthLogoutPostVariables
-    >,
+    reactQuery.UseMutationOptions<undefined, LogoutError, LogoutVariables>,
     "mutationFn"
   >,
 ) => {
   const { fetcherOptions } = useSandboxContext();
-  return reactQuery.useMutation<
-    undefined,
-    LogoutAuthLogoutPostError,
-    LogoutAuthLogoutPostVariables
-  >({
-    mutationFn: (variables: LogoutAuthLogoutPostVariables) =>
-      fetchLogoutAuthLogoutPost({ ...fetcherOptions, ...variables }),
+  return reactQuery.useMutation<undefined, LogoutError, LogoutVariables>({
+    mutationFn: (variables: LogoutVariables) =>
+      fetchLogout({ ...fetcherOptions, ...variables }),
     ...options,
   });
 };
@@ -258,7 +290,12 @@ export type QueryOperation =
       variables: RootGetVariables;
     }
   | {
+      path: "/v1/auth/authorization";
+      operationId: "authorization";
+      variables: AuthorizationVariables;
+    }
+  | {
       path: "/v1/auth/me";
-      operationId: "getUserAuthMe";
-      variables: GetUserAuthMeVariables;
+      operationId: "me";
+      variables: MeVariables;
     };

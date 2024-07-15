@@ -41,10 +41,82 @@ paths:
               schema: {}
           description: Successful Response
       summary: Root
+  /v1/auth/authorization:
+    get:
+      description: "Authorization Request spec. For detail, see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2."
+      operationId: authorization
+      parameters:
+      - explode: true
+        in: query
+        name: response_type
+        required: true
+        schema:
+          enum:
+          - token
+          type: string
+        style: form
+      - description: The client identifier. We use email as it.
+        explode: true
+        in: query
+        name: client_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The URI to redirect to after authorization.
+        explode: true
+        in: query
+        name: redirect_uri
+        required: false
+        schema:
+          default: ""
+          format: uri
+          type: string
+        style: form
+      - description: "A list of scopes expressed as a list of space-delimited, case-sensitive\
+          \ strings. default is [general]"
+        explode: false
+        in: query
+        name: scope
+        required: false
+        schema:
+          default:
+          - general
+          items:
+            type: string
+          type: array
+        style: spaceDelimited
+      - description: RECOMMENDED.  An opaque value used by the client to maintain
+          state between the request and callback.
+        explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "302":
+          description: Redirect to the client with the access token
+          headers:
+            Location:
+              description: URL to redirect to with the access token
+              explode: false
+              schema:
+                type: string
+              style: simple
+        "400":
+          description: Invalid request
+        "401":
+          description: Unauthorized
+      summary: Authorize user.
+      tags:
+      - auth
   /v1/auth/me:
     get:
       description: Return user info if authed.
-      operationId: get_user_auth_me
+      operationId: me
       responses:
         "200":
           content:
@@ -52,13 +124,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: Successful Response
+      security:
+      - auth:
+        - admin
+        - general
       summary: Get User
       tags:
       - auth
   /v1/auth/login:
     post:
       description: Login.
-      operationId: login_auth_login_post
+      operationId: login
       parameters:
       - explode: true
         in: query
@@ -96,7 +172,7 @@ paths:
   /v1/auth/register:
     post:
       description: Register.
-      operationId: register_auth_register_post
+      operationId: register
       parameters:
       - explode: true
         in: query
@@ -105,14 +181,6 @@ paths:
         schema:
           format: email
           title: Email
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: role
-        required: true
-        schema:
-          title: Role
           type: string
         style: form
       - explode: true
@@ -127,8 +195,7 @@ paths:
         "200":
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
+              schema: {}
           description: Successful Response
           headers:
             Set-Cookie:
@@ -149,7 +216,7 @@ paths:
   /v1/auth/logout:
     post:
       description: Logout.
-      operationId: logout_auth_logout_post
+      operationId: logout
       responses:
         "204":
           description: No content
@@ -158,15 +225,6 @@ paths:
       - auth
 components:
   schemas:
-    Message:
-      description: Simply return message.
-      example:
-        message: message
-      properties:
-        message:
-          title: message
-          type: string
-      title: Message
     User:
       example:
         roles:
@@ -185,6 +243,9 @@ components:
             type: string
           title: roles
           type: array
+      required:
+      - email
+      - roles
       title: User
       type: object
     HTTPValidationError:
@@ -233,3 +294,16 @@ components:
       - type
       title: ValidationError
       type: object
+  securitySchemes:
+    auth:
+      flows:
+        implicit:
+          authorizationUrl: http://http://0.0.0.0:8080/v1/auth/authorization
+          scopes:
+            admin: administrator
+            general: general user
+      type: oauth2
+    api_key:
+      in: header
+      name: api_key
+      type: apiKey

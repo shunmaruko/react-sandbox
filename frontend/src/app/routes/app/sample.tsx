@@ -2,11 +2,11 @@ import { useState } from "react";
 
 import { Authorization } from "@/lib/authorization";
 //import { useSearchUsers } from "@/auto-generated/sandboxComponents";
-import {useGetUserAuthMe} from "@/auto-generated/sandboxComponents"
+import {useMe} from "@/auto-generated/sandboxComponents"
 
 export const ProtectedSample = () => {
   //const [query, setQuery] = useState("");
-  const {data, error, isLoading} = useGetUserAuthMe({});
+  const {data, error, isLoading} = useMe({});
 
   // const { data, error, isLoading } = useSearchUsers(
   //   {

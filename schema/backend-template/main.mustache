@@ -16,6 +16,7 @@ app = FastAPI(
     description="{{appDescription}}",
     version="{{appVersion}}",
     docs_url="/",
+    swagger_ui_oauth2_redirect_url="",
 )
 origins = [
     "http://localhost:80",

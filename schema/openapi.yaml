@@ -41,13 +41,72 @@ paths:
           content:
             application/json:
               schema: {}
+  "/v1/auth/authorization":
+    get:
+      description: "Authorization Request spec. For detail, see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2."
+      tags:
+        - auth
+      summary: Authorize user.
+      operationId: authorization
+      parameters:
+      - name: response_type
+        in: query
+        schema:
+          type: string
+          enum: [token]
+        required: true
+      - name: client_id
+        in: query
+        schema:
+          type: string
+        description: The client identifier. We use email as it.
+        required: true
+      - name: redirect_uri
+        in: query
+        schema:
+          type: string
+          format: uri
+          default: ""
+        description: The URI to redirect to after authorization.
+      - name: scope
+        in: query
+        schema: 
+          type: array
+          items:
+            type: string
+          default: [general]
+        style: spaceDelimited
+        explode: false
+        description: A list of scopes expressed as a list of space-delimited, case-sensitive strings. default is [general]
+      - name: state
+        in: query
+        schema:
+          type: string
+          default: ""
+        description: RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.
+      responses:
+        '302':
+          description: Redirect to the client with the access token
+          headers:
+            Location:
+              description: URL to redirect to with the access token
+              schema:
+                type: string
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
   "/v1/auth/me":
     get:
       description: "Return user info if authed."
       tags:
         - auth
       summary: Get User
-      operationId: get_user_auth_me
+      operationId: me
+      security:
+      - auth: 
+        - admin
+        - general
       responses:
         '200':
           description: Successful Response
@@ -61,7 +120,7 @@ paths:
       tags:
         - auth
       summary: Login
-      operationId: login_auth_login_post
+      operationId: login
       parameters:
       - name: email
         in: query
@@ -95,7 +154,7 @@ paths:
       tags:
         - auth
       summary: Register
-      operationId: register_auth_register_post
+      operationId: register
       parameters:
       - name: email
         in: query
@@ -104,12 +163,6 @@ paths:
           type: string
           format: email
           title: Email
-      - name: role
-        in: query
-        required: true
-        schema:
-          type: string
-          title: Role
       - name: password
         in: query
         required: true
@@ -121,8 +174,7 @@ paths:
           description: Successful Response
           content:
             application/json:
-              schema: 
-                $ref: "#/components/schemas/Message"
+              schema: {}
           headers: 
             Set-Cookie:
               schema: 
@@ -140,17 +192,12 @@ paths:
       tags:
         - auth
       summary: Logout
-      operationId: logout_auth_logout_post
+      operationId: logout
       responses:
         '204':
           description: No content
 components:
   schemas:
-    Message:
-      properties:
-        message:
-          type: string
-      description: "Simply return message."
     User:
       properties:
         email:
@@ -162,6 +209,9 @@ components:
           items:
             type: string
           description: "A list of roles assigned to the user"
+      required:
+      - email
+      - roles 
       type: object
     HTTPValidationError:
       properties:
@@ -191,3 +241,16 @@ components:
       - msg
       - type
       title: ValidationError
+  securitySchemes:
+    auth:
+      flows:
+        implicit:
+          authorizationUrl: http://http://0.0.0.0:8080/v1/auth/authorization
+          scopes:
+            admin: administrator
+            general: general user
+      type: oauth2
+    api_key:
+      in: header
+      name: api_key
+      type: apiKey

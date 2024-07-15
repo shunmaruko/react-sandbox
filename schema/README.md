@@ -47,7 +47,7 @@ General steps:
 
 
 # Security Flow
-We use [OAut 2.0 implicit grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2) for authorization, 
+We use [OAut 2.0 implicit grant](https://datatracker.ietf.org/doc/html/rfc6749#section-4.2) for authorization flow.
 
 TODO(shunmaruko): Maybe better to use oidc, but for now it seems a overkill.. [(Reference)](https://qiita.com/kura_lab/items/9159f092a57f26c290cf#%E6%96%B0%E8%A6%8F%E3%81%ABspa%E3%82%92%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AFoauth-20%E3%82%92%E9%81%B8%E6%8A%9E%E3%81%99%E3%82%8B)
 ## Memo
