@@ -92,7 +92,7 @@ def validate_scope_auth(
     return True
 
 def get_token_auth(
-    security_scopes: SecurityScopes, token_header: str = Depends(oauth2_implicit)
+    security_scopes: SecurityScopes, token: str = Depends(oauth2_implicit)
 ) -> TokenModel:
     """
     Validate and decode token.
@@ -110,7 +110,6 @@ def get_token_auth(
     #                   detail="Not authenticated",
     #                   headers={"WWW-Authenticate": "Bearer"},
     #               )
-    token=token_header
     if security_scopes.scopes:
         authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
     else:

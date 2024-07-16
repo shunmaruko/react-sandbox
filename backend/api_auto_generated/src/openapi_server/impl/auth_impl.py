@@ -95,8 +95,7 @@ class AuthApiImpl(BaseAuthApi):
             url += f"&scope={scpoe_str}"
         if state:
             url += f"&state={state}"
-        logger.info("debug")
-        logger.info(url)
+        #TODO(shunmaruko) Is it better to send it by email instead of directly redirect?
         return RedirectResponse(url=url)
     
     def me(self, token_auth: TokenModel) -> User:
