@@ -57,6 +57,8 @@ words
 | Word | Meaning |
 | ---- | ---- |
 | Scope | アクセスができる範囲を表す文字列。通常:で区切られることが多いらしい<br>(例) user:read, admin等 |
+
+
 ## Authorization Flow
 
 ```mermaid
@@ -88,3 +90,27 @@ sequenceDiagram
 3. The identity provider authenticates the user and stores the code_challenge and redirects the user back to the application with an authorization code.
 4. `signinCallback()` handles this callback by sending this authorization code and client secret to the identity provider and receiving in return the access token and ID token.
 5. The access token is now accessible via `getUser()?.access_token` and inserted into the requests to your protected API.
+
+
+# Appendix
+## Authrization & Authentication
+### Oauth
+OAuthは認可のための規格である.
+登場人物：
+* リソースオーナー:　ユーザのこと
+* リソースサーバ: ユーザの許可が必要な情報を保持するサーバ
+* クライアント：ここではwebブラウザ
+* 認可サーバ: クライアントからリソースサーバへのアクセルのリクエストが会った際に、リソースオーナに確認の上、クライアントに対してリソースサーバへのアクセスを許可する(アクセストークンの発行を行う)
+OAuthのプロトコルを用いると、リソースオーナは認証に関する情報(パスワード等)をクライアントに公開せずにリソースへのアクセスを許可することができる。
+
+### OAuthを悪用(?)した認証(いわゆるOauth認証)
+
+OAuth認証とは、リソースサーバにユーザプロフィール情報を返すエンドポイントを用意しておき、そのユーザプロフィール情報を持って認証すること.
+すなわちリソースサーバへのアクセストークンを持ってる人=アクセストークンに紐づくユーザーとしてみなされる。
+Oauthは認可のための規格であるが、アクセストークンによりユーザプロフィールにアクセスし、認証を行う、いわゆるOaoth認証と呼ばれる手法がある．
+OAuth認証ではアクセストークンの発行元を検証しない．そのため、ユーザが悪意のあるサイトへの認証を行ってしまうと、
+その悪意があるサイトに向けて発行されたアクセストークンを用いることで、任意のOAuth認証のサイトへアクセスできてしまう
+(アクセストークンの発行元が検証されないため、リソースサーバーはどのクライアントがアクセスしようとしてるかはわからない)
+
+### 選択
+2024年時点では, SPAは基本的にAuthorization code flow with PKCEがベストプラクティスとされる(参考[A](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-03#section-4), [B](https://docs.oracle.com/en-us/iaas/Content/Resources/Assets/whitepapers/oci-iam-oauth-flows-best-practices.pdf))
