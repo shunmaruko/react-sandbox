@@ -1,10 +1,12 @@
 # coding: utf-8
+from abc import ABC
 
 from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 
 
+from openapi_server.models.extra_models import TokenModel  # noqa: F401
 
-class BaseDefaultApi:
+class BaseDefaultApi(ABC):
     subclasses: ClassVar[Tuple] = ()
 
     def __init_subclass__(cls, **kwargs):
@@ -12,6 +14,7 @@ class BaseDefaultApi:
         BaseDefaultApi.subclasses = BaseDefaultApi.subclasses + (cls,)
     def root_get(
         self,
+        
     ) -> object:
         """Sample description."""
         ...

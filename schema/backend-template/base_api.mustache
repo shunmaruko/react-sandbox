@@ -1,4 +1,5 @@
 # coding: utf-8
+from abc import ABC
 
 from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 
@@ -6,8 +7,9 @@ from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 {{import}}
 {{/imports}}
 {{#securityImports.0}}from {{packageName}}.security_api import {{#securityImports}}get_token_{{.}}{{^-last}}, {{/-last}}{{/securityImports}}{{/securityImports.0}}
+from {{modelPackage}}.extra_models import TokenModel  # noqa: F401
 
-class Base{{classname}}:
+class Base{{classname}}(ABC):
     subclasses: ClassVar[Tuple] = ()
 
     def __init_subclass__(cls, **kwargs):
@@ -18,8 +20,10 @@ class Base{{classname}}:
     def {{operationId}}(
         self,
         {{#allParams}}
-        {{>impl_argument_definition}},
+        {{>impl_argument_definition}}
+        {{^-last}}, {{/-last}}
         {{/allParams}}
+        {{#authMethods}}token_{{name}}: TokenModel,{{/authMethods}}
     ) -> {{returnType}}{{^returnType}}None{{/returnType}}:
         {{#notes}}"""{{.}}"""
         ...{{/notes}}{{^notes}}...{{/notes}}

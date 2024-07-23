@@ -22,7 +22,7 @@ import json
 
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 try:
     from typing import Self
 except ImportError:
@@ -32,8 +32,8 @@ class User(BaseModel):
     """
     User
     """ # noqa: E501
-    email: Optional[StrictStr] = Field(default=None, description="User email")
-    roles: Optional[List[StrictStr]] = Field(default=None, description="A list of roles assigned to the user")
+    email: StrictStr = Field(description="User email")
+    roles: List[StrictStr] = Field(description="A list of roles assigned to the user")
     __properties: ClassVar[list[str]] = ["email", "roles"]
 
     model_config = {

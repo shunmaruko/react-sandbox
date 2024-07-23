@@ -1,46 +1,72 @@
 # coding: utf-8
+from abc import ABC
 
 from typing import ClassVar, Dict, List, Tuple  # noqa: F401
 
 from openapi_server.models.http_validation_error import HTTPValidationError
-from openapi_server.models.message import Message
 from openapi_server.models.user import User
+from openapi_server.security_api import get_token_auth
+from openapi_server.models.extra_models import TokenModel  # noqa: F401
 
-
-class BaseAuthApi:
+class BaseAuthApi(ABC):
     subclasses: ClassVar[Tuple] = ()
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         BaseAuthApi.subclasses = BaseAuthApi.subclasses + (cls,)
-    def get_user_auth_me(
+    def authorization(
         self,
-    ) -> User:
-        """Return user info if authed."""
+        response_type: str
+        , 
+        client_id: str
+        , 
+        redirect_uri: str
+        , 
+        scope: List[str]
+        , 
+        state: str
+        
+        
+    ) -> None:
+        """Authorization Request spec. For detail, see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2."""
         ...
 
 
-    def login_auth_login_post(
+    def login(
         self,
-        email: str,
-        password: str,
+        email: str
+        , 
+        password: str
+        
+        
     ) -> User:
         """Login."""
         ...
 
 
-    def logout_auth_logout_post(
+    def logout(
         self,
+        
     ) -> None:
         """Logout."""
         ...
 
 
-    def register_auth_register_post(
+    def me(
         self,
-        email: str,
-        role: str,
-        password: str,
-    ) -> Message:
+        token_auth: TokenModel,
+    ) -> User:
+        """Return user info if authed."""
+        ...
+
+
+    def register(
+        self,
+        email: str
+        , 
+        password: str
+        
+        
+    ) -> object:
         """Register."""
         ...

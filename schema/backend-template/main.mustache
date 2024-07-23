@@ -3,6 +3,7 @@
 {{>partial_header}}
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 {{#apiInfo}}
 {{#apis}}
@@ -14,6 +15,20 @@ app = FastAPI(
     title="{{appName}}",
     description="{{appDescription}}",
     version="{{appVersion}}",
+    docs_url="/",
+    swagger_ui_oauth2_redirect_url="",
+)
+origins = [
+    "http://localhost:80",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 {{#apiInfo}}

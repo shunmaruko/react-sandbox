@@ -1,6 +1,4 @@
-# coding: utf-8
-
-from typing import List
+from __future__ import annotations
 
 from fastapi import Depends, Security  # noqa: F401
 from fastapi.openapi.models import OAuthFlowImplicit, OAuthFlows  # noqa: F401
@@ -57,6 +55,21 @@ oauth2_implicit = OAuth2(
 )
 {{/isImplicit}}
 
+def validate_scope_{{name}}(
+    required_scopes: SecurityScopes, token_scopes: list[str]
+) -> bool:
+    """
+    Validate required scopes are included in token scope
+
+    :param required_scopes Required scope to access called API
+    :type required_scopes: list[str]
+    :param token_scopes Scope present in token
+    :type token_scopes: list[str]
+    :return: True if access to called API is allowed
+    :rtype: bool
+    """
+
+    return False
 
 def get_token_{{name}}(
     security_scopes: SecurityScopes, token: str = Depends(oauth2_{{#isPassword}}password{{/isPassword}}{{#isCode}}code{{/isCode}}{{#isImplicit}}implicit{{/isImplicit}})
@@ -71,23 +84,6 @@ def get_token_{{name}}(
     """
 
     ...
-
-
-def validate_scope_{{name}}(
-    required_scopes: SecurityScopes, token_scopes: List[str]
-) -> bool:
-    """
-    Validate required scopes are included in token scope
-
-    :param required_scopes Required scope to access called API
-    :type required_scopes: List[str]
-    :param token_scopes Scope present in token
-    :type token_scopes: List[str]
-    :return: True if access to called API is allowed
-    :rtype: bool
-    """
-
-    return False
 
 {{/isOAuth}}
 {{#isApiKey}}

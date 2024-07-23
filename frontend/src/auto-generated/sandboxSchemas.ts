@@ -3,24 +3,17 @@
  *
  * @version 1.0.11
  */
-/**
- * Simply return message.
- */
-export type Message = {
-  message?: string;
-};
-
 export type User = {
   /**
    * User email
    *
    * @format email
    */
-  email?: string;
+  email: string;
   /**
    * A list of roles assigned to the user
    */
-  roles?: string[];
+  roles: string[];
 };
 
 export type HTTPValidationError = {

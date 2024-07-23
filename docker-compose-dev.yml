@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  frontend:
+    image: frontend-dev-image
+    container_name: frontend-dev-container
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+      - /app/node_modules
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    stdin_open: true
+  redis:
+    build:
+      context: backend/redis
+      dockerfile: Dockerfile
+    container_name: redis
+    ports:
+      - 6379:6379
+  backend:
+    image: backend-dev-image
+    container_name: backend-dev-container
+    volumes:
+      - type: bind
+        source: ./backend/api_auto_generated
+        target: /app
+      - /app/.venv/ # This line hides mapping of venv folder in the container
+    build:
+      context: backend/api_auto_generated
+      dockerfile: Dockerfile.dev
+      target: service
+    ports:
+      - "8080:8080"
+    command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080 --reload

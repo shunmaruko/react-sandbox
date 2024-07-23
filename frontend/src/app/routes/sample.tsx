@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { API_BASE_URL } from "@/config";
 import { SampleResponseBody } from "@/features/sample/api";
+import {useMe} from "@/auto-generated/sandboxComponents"
 
 const Users = () => {
   const { error } = useQuery({
@@ -13,6 +14,31 @@ const Users = () => {
   return "Users";
 };
 
+const ApiCallSample = () => {
+  const {data, error, isLoading} = useMe({});
+  if (isLoading){
+    return (
+      <div>Loading…</div>
+    )
+  }
+  if (error) {
+    return (
+      <div>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
+      </div>
+    );
+  }
+  console.log("debug");
+  console.log(data);
+  return (
+    <>
+        <>Email: {data?.email}</>
+        <ul>
+        {data?.roles?.map((role) => <li key={role}>{role}</li>)}
+        </ul>
+    </>
+  )
+}
 export const Sample = () => {
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ["sampleData"],
@@ -28,6 +54,7 @@ export const Sample = () => {
       <>{`Sample foo: ${data ? data.foo : "undefined"} bar: ${data ? data.hoge : "undefined"}`}</>
       <div>{isFetching ? "Updating..." : ""}</div>
       <Users />
+      <ApiCallSample/>
     </>
   );
 };
